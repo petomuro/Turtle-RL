@@ -28,6 +28,7 @@ class Ball:
         # Get new euclidean distance of ball and paddle
         new_distance = self.paddle_distance(paddle)
 
+        # Return previous and new euclidean distance
         return prev_distance, new_distance
 
     def wall_collision(self):

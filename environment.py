@@ -57,7 +57,7 @@ class Environment:
             # Reward
             self.reward += 20
 
-        # If new ball euclidean distance is lower than previous euclidian distance
+        # If new ball euclidean distance is lower than previous euclidian distance between ball and paddle
         if new_ball_distance < prev_ball_distance:
             # Reward
             self.reward += 0.5
