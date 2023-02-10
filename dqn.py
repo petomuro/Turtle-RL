@@ -12,12 +12,12 @@ class DQN:
         self.action_space = action_space
         self.state_space = state_space
         self.epsilon = 1
-        self.gamma = .95
+        self.gamma = 0.95
         self.batch_size = 64
-        self.epsilon_min = .01
-        self.epsilon_decay = .995
+        self.epsilon_min = 0.01
+        self.epsilon_decay = 0.995
         self.learning_rate = 0.001
-        self.memory = deque(maxlen=100000)
+        self.memory = deque(maxlen=2500)
         self.model = self.build_model()
 
     def build_model(self):
