@@ -14,17 +14,18 @@ class Score:
         self.score.hideturtle()
         self.score.goto(0, SCORE_Y_POS)
         self.score.write("Hit: {}\tMissed: {}".format(self.hit, self.miss), align='center',
-                         font=('Courier', 20, 'normal'))
+                         font=('Courier', 14, 'normal'))
 
     def write(self):
         # Rewrite score
         self.score.clear()
         self.score.write("Hit: {}\tMissed: {}".format(self.hit, self.miss), align='center',
-                         font=('Courier', 20, 'normal'))
+                         font=('Courier', 14, 'normal'))
 
     # def reset(self):
     #     # Reset ball position
     #     self.hit, self.miss = 0, 0
+    #     self.score.goto(0, SCORE_Y_POS)
 
     def increment_miss(self):
         # Increment miss and rewrite score

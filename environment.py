@@ -55,12 +55,16 @@ class Environment:
             self.score.increment_hit()
 
             # Reward
-            self.reward += 20
+            self.reward += 5
 
-        # If new ball euclidean distance is lower than previous euclidian distance between ball and paddle
-        if new_ball_distance < prev_ball_distance:
-            # Reward
-            self.reward += 0.5
+        # If paddle and ball are in the same quadrant
+        if (self.paddle.quadrant() == 1 and self.ball.quadrant() == (1, -1)) or (
+                self.paddle.quadrant() == -1 and self.ball.quadrant() == (-1, -1)) or (
+                self.paddle.quadrant() == 0 and self.ball.quadrant() == 0):
+            # If new ball euclidean distance is lower than previous euclidian distance between ball and paddle
+            if new_ball_distance < prev_ball_distance:
+                # Reward
+                self.reward += 1
 
     def step(self, action):
         # Game not done

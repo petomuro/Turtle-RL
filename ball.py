@@ -67,7 +67,39 @@ class Ball:
         # Return euclidean distance
         return math.dist([self.ball.xcor(), self.ball.ycor()], [paddle.xcor(), paddle.ycor()])
 
+    def quadrant(self):
+        # Get ball positions
+        x = self.ball.xcor()
+        y = self.ball.ycor()
+
+        # If ball is located at coordinates smaller than the right side of wall and zero
+        if 0 < x < (WINDOW_WIDTH / 2) - 10:
+            # If ball is located at coordinates greater than the bottom side of wall and zero
+            if 0 > y > -((WINDOW_HEIGHT / 2) - 10):
+                # Return 1, -1 (4. quadrant)
+                return 1, -1
+
+        # If ball is located at coordinates greater than the left side of wall and zero
+        if 0 > x > -((WINDOW_WIDTH / 2) - 10):
+            # If ball is located at coordinates greater than the bottom side of wall and zero
+            if 0 > y > -((WINDOW_HEIGHT / 2) - 10):
+                # Return -1, -1 (3. quadrant)
+                return -1, -1
+
+        # If ball is located at coordinates smaller than the length of ball and zero or coordinates greater than
+        # the length of ball and zero
+        if (0 < x < 10) or (0 > x > -10):
+            # If ball is located at coordinates greater than the bottom side of wall and zero or greater than the
+            # bottom side of wall and zero
+            if (0 > y > -((WINDOW_HEIGHT / 2) - 10)) or (0 > y > -((WINDOW_HEIGHT / 2) - 10)):
+                # Return 0 (between quadrants)
+                return 0
+
     def reset(self):
+        # Reset ball steps
+        # self.stepX = 3
+        self.stepY = -3
+
         # Reset ball position
         self.ball.goto(0, BALL_Y_POS)
 
