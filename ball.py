@@ -57,7 +57,7 @@ class Ball:
 
     def paddle_collision(self, paddle):
         # If ball collides with paddle
-        if abs(self.ball.ycor() - (PADDLE_Y_POS + 20)) < 3 and abs(paddle.xcor() - self.ball.xcor()) < 70:
+        if abs(self.ball.ycor() - (PADDLE_Y_POS + 20)) < 3 and abs(paddle.xcor() - self.ball.xcor()) < 90:
             # Change ball y direction
             self.stepY *= -1
 
@@ -105,4 +105,4 @@ class Ball:
 
     def get_state(self):
         # Return ball state
-        return [self.ball.xcor(), self.ball.ycor(), self.stepX, self.stepY]
+        return [self.ball.xcor() * 0.01, self.ball.ycor() * 0.01, self.stepX, self.stepY]

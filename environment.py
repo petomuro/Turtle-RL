@@ -55,12 +55,15 @@ class Environment:
             self.score.increment_hit()
 
             # Reward
-            self.reward += 5
+            self.reward += 6
+
+        # Get ball and paddle quadrant
+        ball_quadrant = self.ball.quadrant()
+        paddle_quadrant = self.paddle.quadrant()
 
         # If paddle and ball are in the same quadrant
-        if (self.paddle.quadrant() == 1 and self.ball.quadrant() == (1, -1)) or (
-                self.paddle.quadrant() == -1 and self.ball.quadrant() == (-1, -1)) or (
-                self.paddle.quadrant() == 0 and self.ball.quadrant() == 0):
+        if (paddle_quadrant == 1 and ball_quadrant == (1, -1)) or (
+                paddle_quadrant == -1 and ball_quadrant == (-1, -1)) or (paddle_quadrant == 0 and ball_quadrant == 0):
             # If new ball euclidean distance is lower than previous euclidian distance between ball and paddle
             if new_ball_distance < prev_ball_distance:
                 # Reward

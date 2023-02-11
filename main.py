@@ -7,11 +7,11 @@ from environment import Environment
 
 def train_dqn(eps, env):
     action_space = 3
-    state_space = 6
+    state_space = 5  # 6
 
     agent = DQN(action_space, state_space)
 
-    max_steps = 1000
+    # max_steps = 1000
     loss = []
 
     for e in range(eps):
@@ -19,7 +19,7 @@ def train_dqn(eps, env):
         state = np.reshape(state, (1, state_space))
         score = 0
 
-        for i in range(max_steps):
+        while True:  # for i in range(max_steps):
             action = agent.act(state)
             done, reward, next_state = env.step(action)
             score += reward

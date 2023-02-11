@@ -62,4 +62,4 @@ class Paddle:
 
     def get_state(self):
         # Return paddle state
-        return [self.paddle.xcor(), self.stepX]
+        return [self.paddle.xcor() * 0.01]  # [self.paddle.xcor(), self.stepX]
