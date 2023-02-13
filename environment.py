@@ -20,15 +20,20 @@ class Environment:
         self.paddle = Paddle()
         self.ball = Ball()
         self.score = Score()
+        # self.obstacles = []
 
-    def reset(self):
+    def reset(self, episode, episodes):
         # Reset paddle, ball and score
         self.paddle.reset()
         self.ball.reset()
         # self.score.reset()
 
+        # Create obstacle
+        # if episode > (episodes / 2):
+        #     self.obstacles.append(Obstacle())
+
         # Return paddle and ball state
-        return self.paddle.get_state() + self.ball.get_state()
+        return self.paddle.get_state() + self.ball.get_state(self.paddle.paddle)
 
     def run_frame(self):
         # Update turtle screen
@@ -57,13 +62,18 @@ class Environment:
             # Reward
             self.reward += 6
 
+        # Ball obstacle collision
+        # for obstacle in self.obstacles:
+        #     self.ball.obstacle_collision(obstacle.obstacle)
+
         # Get ball and paddle quadrant
         ball_quadrant = self.ball.quadrant()
         paddle_quadrant = self.paddle.quadrant()
 
         # If paddle and ball are in the same quadrant
-        if (paddle_quadrant == 1 and ball_quadrant == (1, -1)) or (
-                paddle_quadrant == -1 and ball_quadrant == (-1, -1)) or (paddle_quadrant == 0 and ball_quadrant == 0):
+        if ((paddle_quadrant == 1) and (ball_quadrant == (1, -1))) or (
+                (paddle_quadrant == -1) and (ball_quadrant == (-1, -1))) or (
+                (paddle_quadrant == 0) and (ball_quadrant == 0)):
             # If new ball euclidean distance is lower than previous euclidian distance between ball and paddle
             if new_ball_distance < prev_ball_distance:
                 # Reward
@@ -93,7 +103,7 @@ class Environment:
         self.run_frame()
 
         # Get paddle and ball state
-        state = self.paddle.get_state() + self.ball.get_state()
+        state = self.paddle.get_state() + self.ball.get_state(self.paddle.paddle)
 
         # Return game state, reward and paddle + ball state
         return self.done, self.reward, state

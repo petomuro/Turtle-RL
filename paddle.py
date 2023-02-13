@@ -22,7 +22,7 @@ class Paddle:
         # If directions is right
         if direction == 'Right':
             # If paddle is located at coordinates smaller than the right side of wall 
-            if x < (WINDOW_WIDTH / 2) - 70:
+            if x < ((WINDOW_WIDTH / 2) - 70):
                 # Change paddle x direction
                 self.paddle.setx(x + self.stepX)
 
@@ -38,7 +38,7 @@ class Paddle:
         x = self.paddle.xcor()
 
         # If paddle is located at coordinates smaller than the right side of wall and zero
-        if 0 < x < (WINDOW_WIDTH / 2) - 70:
+        if 0 < x < ((WINDOW_WIDTH / 2) - 70):
             # Return 1 (4. quadrant)
             return 1
 
@@ -62,4 +62,4 @@ class Paddle:
 
     def get_state(self):
         # Return paddle state
-        return [self.paddle.xcor() * 0.01]  # [self.paddle.xcor(), self.stepX]
+        return [self.paddle.xcor() * 0.01]

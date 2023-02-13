@@ -7,7 +7,7 @@ from environment import Environment
 
 def train_dqn(eps, env):
     action_space = 3
-    state_space = 5  # 6
+    state_space = 7
 
     agent = DQN(action_space, state_space)
 
@@ -15,7 +15,7 @@ def train_dqn(eps, env):
     loss = []
 
     for e in range(eps):
-        state = env.reset()
+        state = env.reset(e, eps)
         state = np.reshape(state, (1, state_space))
         score = 0
 
