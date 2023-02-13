@@ -1,16 +1,19 @@
 import random
 from collections import deque
+from datetime import date
 
 import numpy as np
 from tensorflow.python.keras.layers import Dense
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.optimizer_v2.adam import Adam
 
+from constants import TRAIN_DQN, ACTION_STEPS, STATE_SPACE
+
 
 class DQN:
-    def __init__(self, action_space, state_space):
-        self.action_space = action_space
-        self.state_space = state_space
+    def __init__(self):
+        self.action_space = ACTION_STEPS
+        self.state_space = STATE_SPACE
         self.epsilon = 1
         self.gamma = 0.95
         self.batch_size = 64
@@ -33,8 +36,9 @@ class DQN:
         self.memory.append((state, action, reward, next_state, done))
 
     def act(self, state):
-        if np.random.rand() <= self.epsilon:
-            return random.randrange(self.action_space)
+        if TRAIN_DQN:
+            if np.random.rand() <= self.epsilon:
+                return random.randrange(self.action_space)
 
         act_values = self.model.predict(state)
 
@@ -64,3 +68,9 @@ class DQN:
 
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
+
+    def save_model(self):
+        self.model.save('model{}'.format(date.today()))
+
+    def load_model(self):
+        self.model.load_weights('model{}'.format(date.today()))

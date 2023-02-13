@@ -1,6 +1,6 @@
 import turtle as t
 
-from constants import SCORE_Y_POS
+from constants import SCORE_Y_POS, SCORE_COLOR
 
 
 class Score:
@@ -9,17 +9,17 @@ class Score:
 
         self.score = t.Turtle()
         self.score.speed(0)
-        self.score.color('white')
+        self.score.color(SCORE_COLOR)
         self.score.penup()
         self.score.hideturtle()
         self.score.goto(0, SCORE_Y_POS)
-        self.score.write("Hit: {}\tMissed: {}".format(self.hit, self.miss), align='center',
+        self.score.write('Hit: {}\tMissed: {}'.format(self.hit, self.miss), align='center',
                          font=('Courier', 14, 'normal'))
 
     def write(self):
         # Rewrite score
         self.score.clear()
-        self.score.write("Hit: {}\tMissed: {}".format(self.hit, self.miss), align='center',
+        self.score.write('Hit: {}\tMissed: {}'.format(self.hit, self.miss), align='center',
                          font=('Courier', 14, 'normal'))
 
     # def reset(self):

@@ -2,7 +2,7 @@ import math
 import random
 import turtle as t
 
-from constants import BALL_Y_POS, PADDLE_Y_POS
+from constants import BALL_Y_POS, PADDLE_Y_POS, BALL_SHAPE, BALL_COLOR
 from constants import WINDOW_WIDTH, WINDOW_HEIGHT
 
 
@@ -13,8 +13,8 @@ class Ball:
 
         self.ball = t.Turtle()
         self.ball.speed(0)
-        self.ball.shape('circle')
-        self.ball.color('red')
+        self.ball.shape(BALL_SHAPE)
+        self.ball.color(BALL_COLOR)
         self.ball.penup()
         self.ball.goto(0, BALL_Y_POS)
 
@@ -84,15 +84,15 @@ class Ball:
         if 0 < x < ((WINDOW_WIDTH / 2) - 10):
             # If ball is located at coordinates greater than the bottom side of wall and zero
             if 0 > y > -((WINDOW_HEIGHT / 2) - 10):
-                # Return 1, -1 (4. quadrant)
-                return 1, -1
+                # Return 1 (4. quadrant)
+                return 1  # return 1, -1
 
         # If ball is located at coordinates greater than the left side of wall and zero
         if 0 > x > -((WINDOW_WIDTH / 2) - 10):
             # If ball is located at coordinates greater than the bottom side of wall and zero
             if 0 > y > -((WINDOW_HEIGHT / 2) - 10):
-                # Return -1, -1 (3. quadrant)
-                return -1, -1
+                # Return -1 (3. quadrant)
+                return -1  # return -1, -1
 
         # If ball is located at coordinates smaller than the length of ball and zero or coordinates greater than
         # the length of ball and zero
@@ -103,9 +103,12 @@ class Ball:
                 # Return 0 (between quadrants)
                 return 0
 
+        # Return 2 (other)
+        return 2
+
     def paddle_angle(self, paddle):
         # Return angle between ball and paddle in radians
-        return math.atan2(self.ball.ycor() - paddle.ycor(), self.ball.xcor() - paddle.xcor()) / math.pi
+        return math.atan2(self.ball.ycor() - paddle.ycor(), self.ball.xcor() - paddle.xcor())
 
     def reset(self):
         # Reset ball steps
@@ -117,5 +120,5 @@ class Ball:
 
     def get_state(self, paddle):
         # Return ball state
-        return [self.ball.xcor() * 0.01, self.ball.ycor() * 0.01, self.stepX, self.stepY,
-                self.paddle_distance(paddle) * 0.01, self.paddle_angle(paddle)]
+        return [self.ball.xcor(), self.ball.ycor(), self.stepX, self.stepY, self.quadrant(),
+                self.paddle_distance(paddle), self.paddle_angle(paddle)]

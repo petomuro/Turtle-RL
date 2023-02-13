@@ -1,50 +1,59 @@
+from datetime import date
+
 import matplotlib.pyplot as plt
 import numpy as np
 
+from constants import TRAIN_DQN, EPISODES, MAX_STEPS_PER_EPISODE, STATE_SPACE
 from dqn import DQN
 from environment import Environment
 
 
-def train_dqn(eps, env):
-    action_space = 3
-    state_space = 7
+def run_main(env):
+    agent = DQN()
 
-    agent = DQN(action_space, state_space)
+    if not TRAIN_DQN:
+        agent.load_model()
 
-    # max_steps = 1000
     loss = []
 
-    for e in range(eps):
-        state = env.reset(e, eps)
-        state = np.reshape(state, (1, state_space))
+    for e in range(EPISODES):
+        state = env.reset(e)
+        state = np.reshape(state, (1, STATE_SPACE))
         score = 0
 
-        while True:  # for i in range(max_steps):
+        for i in range(MAX_STEPS_PER_EPISODE):
             action = agent.act(state)
             done, reward, next_state = env.step(action)
             score += reward
-            next_state = np.reshape(next_state, (1, state_space))
-            agent.remember(state, action, reward, next_state, done)
+            next_state = np.reshape(next_state, (1, STATE_SPACE))
+
+            if TRAIN_DQN:
+                agent.remember(state, action, reward, next_state, done)
+
             state = next_state
-            agent.replay()
+
+            if TRAIN_DQN:
+                agent.replay()
 
             if done:
-                print("episode: {}/{}, score: {}".format(e, eps, score))
-
                 break
 
+        print('Episode: {}/{}, Score: {}'.format((e + 1), EPISODES, score))
+
         loss.append(score)
+
+    if TRAIN_DQN:
+        agent.save_model()
 
     return loss
 
 
 if __name__ == '__main__':
-    episodes = 100
     environment = Environment()
+    total_loss = run_main(environment)
 
-    total_loss = train_dqn(episodes, environment)
-
-    plt.plot([i for i in range(episodes)], total_loss)
+    plt.plot([i for i in range(EPISODES)], total_loss)
     plt.xlabel('episodes')
     plt.ylabel('reward')
-    plt.show()
+    # plt.show()
+    plt.savefig(('train_progress{}' if TRAIN_DQN else 'test_progress{}').format(date.today()))

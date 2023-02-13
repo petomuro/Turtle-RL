@@ -1,6 +1,6 @@
 import turtle as t
 
-from constants import STRETCH_LENGTH, PADDLE_Y_POS, WINDOW_WIDTH
+from constants import PADDLE_STRETCH_LENGTH, PADDLE_Y_POS, WINDOW_WIDTH, PADDLE_COLOR, PADDLE_SHAPE
 
 
 class Paddle:
@@ -9,9 +9,9 @@ class Paddle:
 
         self.paddle = t.Turtle()
         self.paddle.speed(0)
-        self.paddle.shape('square')
-        self.paddle.shapesize(stretch_len=STRETCH_LENGTH)
-        self.paddle.color('white')
+        self.paddle.shape(PADDLE_SHAPE)
+        self.paddle.shapesize(stretch_len=PADDLE_STRETCH_LENGTH)
+        self.paddle.color(PADDLE_COLOR)
         self.paddle.penup()
         self.paddle.goto(0, PADDLE_Y_POS)
 
@@ -53,6 +53,9 @@ class Paddle:
             # Return 0 (between quadrants)
             return 0
 
+        # Return 2 (other)
+        return 2
+
     def reset(self):
         # Reset paddle step
         self.stepX = 30
@@ -62,4 +65,4 @@ class Paddle:
 
     def get_state(self):
         # Return paddle state
-        return [self.paddle.xcor() * 0.01]
+        return [self.paddle.xcor(), self.quadrant()]

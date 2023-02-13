@@ -22,14 +22,14 @@ class Environment:
         self.score = Score()
         # self.obstacles = []
 
-    def reset(self, episode, episodes):
+    def reset(self, episode):
         # Reset paddle, ball and score
         self.paddle.reset()
         self.ball.reset()
         # self.score.reset()
 
         # Create obstacle
-        # if episode > (episodes / 2):
+        # if episode > (EPISODES / 2):
         #     self.obstacles.append(Obstacle())
 
         # Return paddle and ball state
@@ -71,8 +71,7 @@ class Environment:
         paddle_quadrant = self.paddle.quadrant()
 
         # If paddle and ball are in the same quadrant
-        if ((paddle_quadrant == 1) and (ball_quadrant == (1, -1))) or (
-                (paddle_quadrant == -1) and (ball_quadrant == (-1, -1))) or (
+        if ((paddle_quadrant == 1) and (ball_quadrant == 1)) or ((paddle_quadrant == -1) and (ball_quadrant == -1)) or (
                 (paddle_quadrant == 0) and (ball_quadrant == 0)):
             # If new ball euclidean distance is lower than previous euclidian distance between ball and paddle
             if new_ball_distance < prev_ball_distance:
