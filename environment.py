@@ -1,7 +1,7 @@
 import turtle as t
 
 from ball import Ball
-from constants import WINDOW_WIDTH, WINDOW_HEIGHT
+from constants import WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, WINDOW_COLOR
 from paddle import Paddle
 from score import Score
 
@@ -12,8 +12,8 @@ class Environment:
         self.reward = 0
 
         self.win = t.Screen()
-        self.win.title('Turtle-RL')
-        self.win.bgcolor('black')
+        self.win.title(WINDOW_TITLE)
+        self.win.bgcolor(WINDOW_COLOR)
         self.win.setup(width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
         self.win.tracer(0)
 
